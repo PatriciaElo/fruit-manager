@@ -26,16 +26,16 @@ with st.sidebar:
         )
         st.toast(f"Vous avez vendu {quantite_vendre} unité(s) de {fruit_vendre}​ ☑️​")
 
+    st.header("​🌱​ Récolter des fruits")
+    fruit_recolter = st.selectbox(
+        "Choisir un fruit à récolter", list(inventaire.keys()), key="recolter"
+    )
+    quantite_recolter = st.number_input(
+        "Quantité à récolter", min_value=1, step=1, key="quantite"
+    )
 
-# st.sidebar.title("🛒​ Vendre des fruits")
-#
-# st.sidebar.selectbox("Choisir un fruit", inventaire)
-# st.sidebar.number_input(
-#    "Quantité à vendre", value=0, min_value=0, max_value=100, step=1
-# )
-#
-## Bouton Vendre
-# start_vendre = st.sidebar.button("Vendre")
-#
-# if start_vendre:
-#    st.toast(f"Vous avez vendu {inventaire.value} unités de {inventaire}")
+    if st.button("Récolter"):
+        inventaire = recolter(inventaire, fruit_recolter, quantite_recolter)
+        st.toast(
+            f"Vous avez récolté {quantite_recolter} unité(s) de {fruit_recolter}​ ☑️​"
+        )
