@@ -86,6 +86,15 @@ def vendre(inventaire, fruit, quantite, tresorerie, prix):
         print(f"\n Pas assez de {fruit} pour vendre {quantite} unités.")
 
 
+def valeur_stock(inventaire, prix):
+    valeur = {}
+    for fruit in inventaire:
+        quantite = inventaire[fruit]
+        prix_unitaire = prix.get(fruit, 0)
+        valeur[fruit] = quantite * prix_unitaire
+    return valeur
+
+
 if __name__ == "__main__":
     inventaire = ouvrir_inventaire()
     tresorerie = ouvrir_tresorerie()
