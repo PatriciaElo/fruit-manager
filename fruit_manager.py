@@ -86,6 +86,12 @@ def vendre(inventaire, fruit, quantite, tresorerie, prix):
         print(f"\n Pas assez de {fruit} pour vendre {quantite} unités.")
 
 
+def dollar_to_euro(tresorerie):
+    taux_de_change = 0.86
+    tresorerie_euro = tresorerie * taux_de_change
+    return tresorerie_euro
+
+
 def valeur_stock(inventaire, prix):
     valeur = {}
     for fruit in inventaire:
