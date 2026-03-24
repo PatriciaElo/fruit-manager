@@ -4,9 +4,18 @@ from fruit_manager import *
 
 st.title("🍇​ Dashboard de la Plantation")
 
-inventaire = ouvrir_inventaire()
-prix = ouvrir_prix()
-tresorerie = ouvrir_tresorerie()
+if "inventaire" not in st.session_state:
+    st.session_state.inventaire = ouvrir_inventaire()
+
+if "tresorerie" not in st.session_state:
+    st.session_state.tresorerie = ouvrir_tresorerie()
+
+if "prix" not in st.session_state:
+    st.session_state.prix = ouvrir_prix()
+
+inventaire = st.session_state.inventaire
+prix = st.session_state.prix
+tresorerie = st.session_state.tresorerie
 
 st.header("💰​ Trésorerie")
 st.metric(label="Montant disponible", value=f"{tresorerie:.2f} $")
@@ -36,6 +45,14 @@ with st.sidebar:
         inventaire, tresorerie = vendre(
             inventaire, fruit_vendre, quantite_vendre, tresorerie, prix
         )
+        # Mise à jour de la session
+        st.session_state.inventaire = inventaire
+        st.session_state.tresorerie = tresorerie
+
+        # Sauvegarde fichier
+        ecrire_inventaire(inventaire)
+        ecrire_tresorerie(inventaire)
+
         st.toast(f"Vous avez vendu {quantite_vendre} unité(s) de {fruit_vendre}​ ☑️​")
 
     st.header("​🌱​ Récolter des fruits")
@@ -48,6 +65,8 @@ with st.sidebar:
 
     if st.button("Récolter"):
         inventaire = recolter(inventaire, fruit_recolter, quantite_recolter)
+        st.session_state.inventaire = inventaire
+        ecrire_inventaire(inventaire)
         st.toast(
             f"Vous avez récolté {quantite_recolter} unité(s) de {fruit_recolter}​ ☑️​"
         )
