@@ -1,10 +1,38 @@
 import json
 import os
+from datetime import datetime
 
 DATA_DIR = "data"
 PRIX_PATH = os.path.join(DATA_DIR, "prix.json")
 INVENTAIRE_PATH = os.path.join(DATA_DIR, "inventaire.json")
 TRESORERIE_PATH = os.path.join(DATA_DIR, "tresorerie.txt")
+
+
+def enregistrer_tresorerie_historique(
+    tresorerie, fichier="data/tresorerie_history.json"
+):
+    historique = []
+    if os.path.exists(fichier):
+        with open(fichier, "r") as f:
+            try:
+                historique = json.load(f)
+            except:
+                historique = []
+    historique.append(
+        {"timestamp": datetime.now().isoformat(), "tresorerie": tresorerie}
+    )
+    with open(fichier, "w") as f:
+        json.dump(historique, f)
+
+
+def lire_tresorerie_historique(fichier="data/tresorerie_history.json"):
+    if os.path.exists(fichier):
+        with open(fichier, "r") as f:
+            try:
+                return json.load(f)
+            except:
+                return []
+    return []
 
 
 def ouvrir_prix(path=PRIX_PATH):
@@ -72,6 +100,7 @@ def afficher_inventaire(inventaire):
 def recolter(inventaire, fruit, quantite):
     inventaire[fruit] = inventaire.get(fruit, 0) + quantite
     print(f"\n OK - Récolté {quantite} {fruit} supplémentaires !")
+    return inventaire
 
 
 def vendre(inventaire, fruit, quantite, tresorerie, prix):
@@ -80,10 +109,24 @@ def vendre(inventaire, fruit, quantite, tresorerie, prix):
     ):  # get ici retourne juste la valeur associée à la clé.
         inventaire[fruit] -= quantite
         tresorerie += prix.get(fruit, 0) * quantite
+        enregistrer_tresorerie_historique(tresorerie)
         print(f"\n Vendu {quantite} {fruit} !")
         return (inventaire, tresorerie)
     else:
         print(f"\n Pas assez de {fruit} pour vendre {quantite} unités.")
+
+
+def vendre_tout(inventaire, tresorerie, prix):
+    print("\n🛒​ Vente de tout l'inventaire :")
+    for fruit, quantite in list(inventaire.items()):
+        if quantite > 0:
+            revenu = prix.get(fruit, 0) * quantite
+            tresorerie += revenu
+            print(
+                f"- {fruit.capitalize()} : vendu {quantite} unités pour {revenu:.2f} $"
+            )
+            inventaire[fruit] = 0
+    return inventaire, tresorerie
 
 
 def dollar_to_euro(tresorerie):
