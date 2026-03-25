@@ -42,7 +42,7 @@ with st.sidebar:
     quantite_vendre = st.number_input("Quantité à vendre", min_value=1, step=1)
 
     if st.button("Vendre"):
-        inventaire, tresorerie = vendre(
+        inventaire, tresorerie, message = vendre(
             inventaire, fruit_vendre, quantite_vendre, tresorerie, prix
         )
         # Mise à jour de la session
@@ -51,9 +51,15 @@ with st.sidebar:
 
         # Sauvegarde fichier
         ecrire_inventaire(inventaire)
-        ecrire_tresorerie(inventaire)
+        ecrire_tresorerie(tresorerie)
 
-        st.toast(f"Vous avez vendu {quantite_vendre} unité(s) de {fruit_vendre}​ ☑️​")
+        if message["status"] == "success":
+            st.success(message["text"])
+            st.toast(
+                f"Vous avez vendu {quantite_vendre} unité(s) de {fruit_vendre}​ ☑️​"
+            )
+        else:
+            st.error(message["text"])
 
     st.header("​🌱​ Récolter des fruits")
     fruit_recolter = st.selectbox(

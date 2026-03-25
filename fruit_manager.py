@@ -110,10 +110,14 @@ def vendre(inventaire, fruit, quantite, tresorerie, prix):
         inventaire[fruit] -= quantite
         tresorerie += prix.get(fruit, 0) * quantite
         enregistrer_tresorerie_historique(tresorerie)
-        print(f"\n Vendu {quantite} {fruit} !")
-        return (inventaire, tresorerie)
+        message = {"status": "success", "text": f"\nVendu {quantite} {fruit} !"}
+        return (inventaire, tresorerie, message)
     else:
-        print(f"\n Pas assez de {fruit} pour vendre {quantite} unités.")
+        message = {
+            "status": "error",
+            "text": f"\n Pas assez de {fruit} pour vendre {quantite} unités.",
+        }
+        return (inventaire, tresorerie, message)
 
 
 def vendre_tout(inventaire, tresorerie, prix):
