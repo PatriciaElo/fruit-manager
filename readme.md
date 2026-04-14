@@ -2,6 +2,15 @@
 
 Bienvenue sur **Fruit Manager**, un tableau de bord interactif pour gérer votre plantation de fruits ! Ce projet, développé avec Streamlit, vous permet de suivre votre inventaire, vendre et récolter des fruits tout en surveillant votre trésorerie en temps réel.
 
+## 📊 Aperçu de l’application
+
+Voici un aperçu du tableau de bord de l’application Streamlit :
+
+![Dashboard Fruit Manager](dashboard.png)
+
+## 🎯 Objectif du projet
+Simuler une petite application de gestion d’inventaire avec suivi dynamique des stocks et de la trésorerie.
+
 ## 🛠️​ Installation
 
 Création de l'environnement virtuel :
