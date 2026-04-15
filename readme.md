@@ -1,5 +1,7 @@
 # 🍇 ​Fruit manager
 
+Welcome to **Fruit Manager**, an interactive dashboard built with Python and Streamlit for managing a fruit inventory. It allows users to track stock, sell and harvest fruits, and monitor cash flow in real time.
+
 Bienvenue sur **Fruit Manager**, un tableau de bord interactif pour gérer votre plantation de fruits ! Ce projet, développé avec Streamlit, vous permet de suivre votre inventaire, vendre et récolter des fruits tout en surveillant votre trésorerie en temps réel.
 
 ## 📊 Aperçu de l’application
